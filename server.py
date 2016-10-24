@@ -36,13 +36,22 @@ class FileSyncEvent(FileSystemEventHandler):
     def on_modified(self,event):
         # print type(event)
         self._logger.info("Modify file %s"%event.src_path)
+     
+    def on_moved(self, event):
+        # print type(event)
+        self._logger.info("Move file %s->%s"%(event.src_path, event.dest_path))
+        dest_file = os.path.abspath(event.dest_path)
+	ext_name = os.path.splitext(dest_file)[1]
+        if ext_name in ['.mobi']:
+            self._logger.info("Send to kindle %s..."%dest_file)
+            send_to_kindle(dest_file)
 
 def send_to_kindle(file):
     logger = logging.getLogger("SendToKindle")
     smpt_client = SMTPClient(HOST_NAME,HOST_PORT,USER_NAME,USER_PASS)
     msg = Message(FROM_NAME,TO_NAME,'Daily EBook','Daily EBook from KDF5000, Thanks!',with_attach=True)
     msg.attach(file)
-    # print msg.getMessage()
+    #print msg.getMessage()
     res, msg = smpt_client.send(USER_NAME,KINDLE_MAILS,msg)
     if res == 1:
         logger.info("Send %s to kindle successfully!"%file)
