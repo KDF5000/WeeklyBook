@@ -7,14 +7,15 @@ $git clone https://github.com/KDF5000/WeeklyBook
 
 然后修改`server.py`里面的kindle邮箱，以及授权的邮箱
 
-> EXT_LIST = ['mobi'] #想要发送的邮件格式
-> HOST_NAME = 'smtp.cstnet.cn' #授权邮箱的smtp服务器
-> HOST_PORT = 25 #smtp服务器端口
-> USER_NAME = 'kongdefei@ict.ac.cn' #授权邮箱的用户名
-> USER_PASS = '*********************'
-> KINDLE_MAILS = ['kdf5000@kindle.cn'] #接收电子书的kindle邮箱，可以在亚马逊查看
-> FROM_NAME = 'kongdefei@ict.ac.cn' #发送邮件的from名字，建议使用发送的邮箱地址
-
+```
+EXT_LIST = ['mobi'] #想要发送的邮件格式
+HOST_NAME = 'smtp.cstnet.cn' #授权邮箱的smtp服务器
+HOST_PORT = 25 #smtp服务器端口
+USER_NAME = 'kongdefei@ict.ac.cn' #授权邮箱的用户名
+USER_PASS = '*********************'
+KINDLE_MAILS = ['kdf5000@kindle.cn'] #接收电子书的kindle邮箱，可以在亚马逊查看
+FROM_NAME = 'kongdefei@ict.ac.cn' #发送邮件的from名字，建议使用发送的邮箱地址
+```
 ##### 后台启动
 
 进入下载的文件夹，执行下面的命令
