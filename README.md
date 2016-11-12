@@ -29,5 +29,4 @@ $nohup python server.py /home/ubuntu/kongdefei/SyncBook > sync.out 2>&1 &
 
 至此，你就可以享受你心爱的kindle每周定时收到一本优秀的电子书了。
 顺便晒一下树莓派[憨笑]
-![](http://7sbpmg.com1.z0.glb.clouddn.com/blog/image/raspberry.jpeg)
-
+![](raspberry.jpeg)
