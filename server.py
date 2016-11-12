@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import sys, time, logging
@@ -16,6 +16,7 @@ USER_PASS = 'kong19920213'
 KINDLE_MAILS = ['kdf5000@kindle.cn'] #可以为一个list
 FROM_NAME = 'kongdefei@ict.ac.cn'
 TO_NAME = 'Kindle'
+MORNITOR_PATH = None
 
 class FileSyncEvent(FileSystemEventHandler):
 
@@ -41,7 +42,12 @@ class FileSyncEvent(FileSystemEventHandler):
         # print type(event)
         self._logger.info("Move file %s->%s"%(event.src_path, event.dest_path))
         dest_file = os.path.abspath(event.dest_path)
-	ext_name = os.path.splitext(dest_file)[1]
+        dest_dir = os.path.dirname(dest_file)
+        # print dest_dir,MORNITOR_PATH
+        if dest_dir != MORNITOR_PATH:
+
+            return
+        ext_name = os.path.splitext(dest_file)[1]
         if ext_name in ['.mobi']:
             self._logger.info("Send to kindle %s..."%dest_file)
             send_to_kindle(dest_file)
@@ -63,12 +69,16 @@ if __name__ == "__main__":
                         format='%(asctime)s - %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S')
     logger = logging.getLogger("Main")
-    path = sys.argv[1] if len(sys.argv) > 1 else '.'
+    path = os.path.abspath(sys.argv[1] if len(sys.argv) > 1 else '.')
+    if not os.path.isdir(path):
+        logger.info("%s is not a dir"%path)
+        sys.exit()
+
+    MORNITOR_PATH = path
     event_handler = FileSyncEvent()
     observer = Observer()
     observer.schedule(event_handler, path, recursive=True)
-
-    logger.info("Start sync server")
+    logger.info("Start sync server, mornitoring folder: %s"%path)
     observer.start()
     logger.info("Begin to mornitor!")
     try:
